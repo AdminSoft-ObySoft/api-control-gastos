@@ -1,17 +1,14 @@
 import dbClient from "../config/dbClient";
 
 class rutasModel {
-
+    private collection = dbClient.db.collection("rutas");
     async create(ruta:any) {
-        
-        const colMascotas = dbClient.db.collection('rutas');
-        return await colMascotas.insertOne(ruta)
+        return await this.collection.insertOne(ruta)
     }
     
     async getAll() {
-        const colMascotas = dbClient.db.collection('rutas');
-        return await colMascotas.find()
+        return await this.collection.find().toArray();
     }
 }
 
-export default new rutasModel
+export default new rutasModel();

@@ -14,8 +14,11 @@ require("dotenv/config");
 class dbClient {
     constructor() {
         const queryString = process.env.MONGO_URL;
+        if (!queryString) {
+            throw new Error("❌ MONGO_URL no está definida en .env");
+        }
         this.client = new mongodb_1.MongoClient(queryString);
-        this.conectarBD();
+        // this.conectarBD();
     }
     conectarBD() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -26,8 +29,9 @@ class dbClient {
             }
             catch (error) {
                 console.error("❌ Error al conectar a MongoDB:", error);
+                process.exit(1); // Detiene la ejecución si no puede conectar
             }
         });
     }
 }
-exports.default = new dbClient;
+exports.default = new dbClient();

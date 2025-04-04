@@ -15,40 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const rutas_model_1 = __importDefault(require("../models/rutas_model"));
 class rutasController {
     constructor() { }
-    create_ruta(req, res) {
+    create_ruta(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const data = rutas_model_1.default.create(req.body);
-                console.log(data);
+                const data = yield rutas_model_1.default.create(req.body);
                 return res.status(201).json(data);
             }
             catch (error) {
-                res.status(500).send(error);
+                // res.status(500).json({ error: "Error al crear la ruta" });
+                next(error);
             }
         });
     }
-    update_ruta(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const data = rutas_model_1.default.getAll();
-                console.log(data);
-                return res.status(201).json(data);
-            }
-            catch (error) {
-            }
-        });
-    }
-    list_all_ruta(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const data = rutas_model_1.default.getAll();
-                return res.status(201).json(data);
-            }
-            catch (error) {
-            }
-        });
-    }
-    list_one_ruta(req, res) {
+    update_ruta(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
             }
@@ -56,7 +35,27 @@ class rutasController {
             }
         });
     }
-    delete_ruta(req, res) {
+    list_all_ruta(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const data = yield rutas_model_1.default.getAll();
+                return res.status(200).json(data);
+            }
+            catch (error) {
+                // res.status(500).json({ error: "Error al obtener rutas" });
+                next(error);
+            }
+        });
+    }
+    list_one_ruta(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+            }
+            catch (error) {
+            }
+        });
+    }
+    delete_ruta(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
             }

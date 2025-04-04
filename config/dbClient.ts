@@ -9,8 +9,11 @@ class dbClient {
 
     constructor() {
         const queryString = process.env.MONGO_URL as string;
+        if (!queryString) {
+          throw new Error("❌ MONGO_URL no está definida en .env");
+        }
         this.client = new MongoClient(queryString);
-        this.conectarBD();
+        // this.conectarBD();
     }
 
     async conectarBD() {
@@ -20,8 +23,10 @@ class dbClient {
             console.log("🔥 Conectado a MongoDB");
           } catch (error) {
             console.error("❌ Error al conectar a MongoDB:", error);
+            process.exit(1); // Detiene la ejecución si no puede conectar
+            
           }
     }
 }
 
-export default new dbClient;
+export default new dbClient();

@@ -14,17 +14,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dbClient_1 = __importDefault(require("../config/dbClient"));
 class rutasModel {
+    constructor() {
+        this.collection = dbClient_1.default.db.collection("rutas");
+    }
     create(ruta) {
         return __awaiter(this, void 0, void 0, function* () {
-            const colMascotas = dbClient_1.default.db.collection('rutas');
-            return yield colMascotas.insertOne(ruta);
+            return yield this.collection.insertOne(ruta);
         });
     }
     getAll() {
         return __awaiter(this, void 0, void 0, function* () {
-            const colMascotas = dbClient_1.default.db.collection('rutas');
-            return yield colMascotas.find();
+            return yield this.collection.find().toArray();
         });
     }
 }
-exports.default = new rutasModel;
+exports.default = new rutasModel();
